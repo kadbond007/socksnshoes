@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socks N Shoes Media — Where Mass Media Meets Real Experiences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,600&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #141210;
+    --paper: #f3ede2;
+    --paper-warm: #ece3d3;
+    --cream: #faf6ed;
+    --accent: #ff3b1f;
+    --accent-deep: #c42818;
+    --gold: #c99a3b;
+    --muted: #6b6257;
+    --rule: #141210;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Paper grain texture */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0 0.06 0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .serif { font-family: 'Fraunces', serif; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    border-bottom: 1px solid var(--ink);
+    padding: 10px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    position: relative;
+    z-index: 5;
+    background: var(--paper);
+  }
+  .topbar .edition { display: flex; gap: 24px; }
+  .topbar .edition span::before { content: "◆"; color: var(--accent); margin-right: 6px; }
+  .topbar .weather { color: var(--muted); }
+
+  /* ============ MASTHEAD ============ */
+  .masthead {
+    border-bottom: 3px double var(--ink);
+    padding: 28px 32px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    background: var(--paper);
+  }
+  .masthead .vol {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .masthead .vol b { color: var(--ink); }
+  .masthead h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(42px, 8.5vw, 128px);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    font-variation-settings: "opsz" 144;
+    font-style: italic;
+  }
+  .masthead h1 .amp {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 0.85em;
+    margin: 0 0.1em;
+  }
+  .masthead .tagline {
+    margin-top: 12px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(14px, 1.6vw, 19px);
+    letter-spacing: 0.02em;
+    color: var(--muted);
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    border-bottom: 1px solid var(--ink);
+    padding: 12px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 50;
+    backdrop-filter: blur(4px);
+  }
+  nav ul { list-style: none; display: flex; gap: 28px; flex-wrap: wrap; }
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+  nav a:hover { color: var(--accent); }
+  nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+  nav a:hover::after { width: 100%; }
+  nav .cta-btn {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 10px 18px;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    transition: all 0.2s;
+  }
+  nav .cta-btn:hover { background: var(--accent); color: var(--cream); }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 48px 32px 64px;
+    display: grid;
+    grid-template-columns: 1.1fr 1px 0.9fr;
+    gap: 40px;
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    z-index: 5;
+  }
+  .hero .divider { background: var(--ink); width: 1px; }
+  .hero .lead .kicker {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 4px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(38px, 5.5vw, 78px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .hero h2 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .hero .dek {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 58ch;
+    column-count: 1;
+  }
+  .hero .dek::first-letter {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    float: left;
+    font-size: 68px;
+    line-height: 0.85;
+    padding: 6px 10px 0 0;
+    color: var(--accent);
+  }
+
+  .hero .side { display: flex; flex-direction: column; gap: 28px; }
+  .stat-card {
+    border: 1px solid var(--ink);
+    padding: 20px;
+    background: var(--cream);
+    position: relative;
+  }
+  .stat-card .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .stat-card .num sup { font-size: 24px; color: var(--accent); margin-left: 4px; vertical-align: super; }
+  .stat-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .stat-card.dark { background: var(--ink); color: var(--cream); }
+  .stat-card.dark .num { color: var(--cream); }
+  .stat-card.dark .num sup { color: var(--accent); }
+  .stat-card.dark .label { color: var(--paper-warm); }
+
+  /* ============ TICKER ============ */
+  .ticker {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    z-index: 5;
+  }
+  .ticker-track {
+    display: inline-block;
+    animation: marquee 42s linear infinite;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+  }
+  .ticker-track span { margin: 0 36px; }
+  .ticker-track .sep { color: var(--accent); font-style: normal; }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ============ SECTION FRAME ============ */
+  section.story {
+    padding: 80px 32px;
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    z-index: 5;
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: end;
+    margin-bottom: 48px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+  }
+  .section-head .sec-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 0.8;
+    color: var(--accent);
+  }
+  .section-head h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(32px, 4.5vw, 58px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+  }
+  .section-head .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ============ MEDIA BUYING GRID ============ */
+  .intro-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 56px;
+    border-bottom: 1px dashed var(--ink);
+    margin-bottom: 56px;
+  }
+  .intro-block .pull {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(22px, 2.4vw, 32px);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+  .intro-block .pull .highlight {
+    background: linear-gradient(180deg, transparent 60%, rgba(255,59,31,0.3) 60%);
+  }
+  .intro-block .body p {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+  .channel {
+    grid-column: span 6;
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 36px 32px;
+    background: var(--cream);
+    transition: background 0.3s;
+    position: relative;
+  }
+  .channel:hover { background: var(--paper-warm); }
+  .channel .ch-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .channel h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .channel .sub {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .channel .what-we-do {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--ink);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .channel .what-we-do::before { content: ""; width: 20px; height: 1px; background: var(--ink); }
+  .channel ul {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+  .channel ul li {
+    font-size: 15px;
+    padding: 6px 0;
+    border-bottom: 1px dotted rgba(20,18,16,0.2);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .channel ul li::before {
+    content: "→";
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .channel .impact {
+    border-top: 2px solid var(--ink);
+    padding-top: 16px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .channel .impact b {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    display: block;
+    margin-bottom: 6px;
+    color: var(--accent);
+  }
+
+  .channel.wide { grid-column: span 12; background: var(--ink); color: var(--cream); }
+  .channel.wide h4 { color: var(--cream); }
+  .channel.wide .sub { color: var(--paper-warm); }
+  .channel.wide .what-we-do { color: var(--cream); }
+  .channel.wide .what-we-do::before { background: var(--cream); }
+  .channel.wide ul li { border-color: rgba(243,237,226,0.2); }
+  .channel.wide .other-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .channel.wide .other-grid div {
+    border-left: 2px solid var(--accent);
+    padding: 12px 16px;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.3;
+  }
+
+  /* ============ APPROACH STRIP ============ */
+  .approach {
+    margin-top: 56px;
+    padding: 40px;
+    background: var(--ink);
+    color: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .approach h5 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .approach h5 em { color: var(--accent); font-style: normal; }
+  .approach-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 32px;
+  }
+  .approach-items div {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(243,237,226,0.3);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .approach-items div::before {
+    content: "●";
+    color: var(--accent);
+  }
+
+  /* ============ EVENT IP SECTION ============ */
+  #events { background: var(--ink); color: var(--cream); }
+  #events .section-head { border-color: var(--cream); }
+  #events .section-head h3 { color: var(--cream); }
+  #events .section-head .sec-num { color: var(--accent); }
+  #events .section-head .meta { color: var(--paper-warm); }
+
+  #events .intro-block { border-color: rgba(243,237,226,0.3); }
+  #events .intro-block .pull .highlight {
+    background: linear-gradient(180deg, transparent 60%, rgba(255,59,31,0.5) 60%);
+  }
+  #events .intro-block .body p { color: var(--paper-warm); }
+
+  .build-capabilities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 72px;
+  }
+  .build-col h6 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--accent);
+    margin-bottom: 20px;
+  }
+  .build-col ul { list-style: none; }
+  .build-col ul li {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    padding: 14px 0;
+    border-bottom: 1px dashed rgba(243,237,226,0.25);
+    display: flex;
+    gap: 18px;
+    align-items: baseline;
+  }
+  .build-col ul li .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 24px;
+  }
+
+  /* Flagship IPs */
+  .flagships-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .flagships {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--paper-warm);
+    border-left: 1px solid var(--paper-warm);
+  }
+  .ip-card {
+    padding: 40px 32px;
+    border-right: 1px solid var(--paper-warm);
+    border-bottom: 1px solid var(--paper-warm);
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+  .ip-card:hover { background: rgba(255,59,31,0.08); }
+  .ip-card .ip-idx {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+  .ip-card h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 44px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    font-style: italic;
+    margin: 20px 0;
+  }
+  .ip-card .ip-desc {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--paper-warm);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .ip-card .ip-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px dashed rgba(243,237,226,0.25);
+    padding-top: 14px;
+  }
+  .ip-card .ornament {
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 220px;
+    color: rgba(255,59,31,0.08);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  /* Why IPs work */
+  .why-work {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 48px;
+    align-items: start;
+    padding: 40px 0;
+    border-top: 1px solid rgba(243,237,226,0.3);
+  }
+  .why-work h5 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.1;
+  }
+  .why-work ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 32px;
+  }
+  .why-work ul li {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    padding-left: 32px;
+    position: relative;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed rgba(243,237,226,0.2);
+  }
+  .why-work ul li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* ============ WHY US ============ */
+  #why { background: var(--cream); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+  .why-cell {
+    padding: 32px 24px;
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--cream);
+    transition: all 0.3s;
+  }
+  .why-cell:hover { background: var(--accent); color: var(--cream); }
+  .why-cell:hover .why-idx { color: var(--cream); }
+  .why-cell .why-idx {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 0.9;
+    color: var(--accent);
+  }
+  .why-cell p {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  /* ============ CTA ============ */
+  #cta {
+    background: var(--accent);
+    color: var(--cream);
+    padding: 100px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: "IMPACT";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(180px, 28vw, 420px);
+    color: rgba(20,18,16,0.08);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #cta .cta-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  #cta h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    position: relative;
+    margin-bottom: 32px;
+  }
+  #cta h3 .underline { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 12px; }
+  #cta .cta-line {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    position: relative;
+    margin-bottom: 48px;
+  }
+  #cta .cta-line span { display: inline-block; margin: 0 12px; }
+  #cta .cta-line .dot { color: var(--ink); }
+  #cta .cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    position: relative;
+    flex-wrap: wrap;
+  }
+  #cta .btn {
+    padding: 18px 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    text-decoration: none;
+    border: 2px solid var(--ink);
+    transition: all 0.2s;
+  }
+  #cta .btn-primary { background: var(--ink); color: var(--cream); }
+  #cta .btn-primary:hover { background: var(--cream); color: var(--ink); }
+  #cta .btn-ghost { background: transparent; color: var(--ink); }
+  #cta .btn-ghost:hover { background: var(--ink); color: var(--cream); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 60px 32px 32px;
+    position: relative;
+    z-index: 5;
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(243,237,226,0.2);
+  }
+  .foot-grid h6 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .foot-grid .brand-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .foot-grid p {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--paper-warm);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .foot-grid ul { list-style: none; }
+  .foot-grid ul li {
+    padding: 6px 0;
+    font-size: 14px;
+  }
+  .foot-grid ul li a {
+    color: var(--paper-warm);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .foot-grid ul li a:hover { color: var(--accent); }
+  .foot-bottom {
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 960px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero .divider { display: none; }
+    .intro-block { grid-template-columns: 1fr; }
+    .channel { grid-column: span 12; }
+    .channel.wide .other-grid { grid-template-columns: repeat(2, 1fr); }
+    .approach { grid-template-columns: 1fr; gap: 24px; }
+    .build-capabilities { grid-template-columns: 1fr; gap: 24px; }
+    .flagships { grid-template-columns: 1fr; }
+    .why-work { grid-template-columns: 1fr; }
+    .why-work ul { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .section-head { grid-template-columns: 1fr; gap: 8px; }
+    .section-head .meta { text-align: left; }
+    nav ul { display: none; }
+  }
+  @media (max-width: 520px) {
+    .topbar { flex-direction: column; gap: 6px; text-align: center; }
+    .why-grid { grid-template-columns: 1fr; }
+    .channel.wide .other-grid { grid-template-columns: 1fr; }
+    section.story { padding: 56px 20px; }
+    .masthead, .hero, nav, #cta, footer { padding-left: 20px; padding-right: 20px; }
+    .foot-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============ ENTRANCE ANIMATION ============ */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="edition">
+    <span>Pune · Est. Edition</span>
+    <span>Vol. MMXXVI</span>
+  </div>
+  <div class="weather">Media · Moments · Impact</div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="vol">The <b>Socks N Shoes</b> Chronicle — Independent Since Day One</div>
+  <h1>Socks <span class="amp">&amp;</span> Shoes<br>Media</h1>
+  <p class="tagline">Where Mass Media Meets Real Experiences.</p>
+</header>
+
+<!-- NAV -->
+<nav>
+  <ul>
+    <li><a href="#media">Media Buying</a></li>
+    <li><a href="#events">Event IP</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <a href="#cta" class="cta-btn">Plan a Campaign →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="lead">
+    <span class="kicker">◆ The Front Page</span>
+    <h2>From front-page <em>dominance</em> to festival <em>crowds</em> — your brand, unmissable.</h2>
+    <p class="dek">We are a full-service media buying and experiential agency specializing in conventional advertising and owned event IP creation. From dominating print headlines and radio airwaves to building high-energy festivals, we help brands connect with audiences at scale — and in real life.</p>
+  </div>
+  <div class="divider"></div>
+  <aside class="side">
+    <div class="stat-card">
+      <div class="num">2<sup>×</sup></div>
+      <div class="label">Core Disciplines · Media + Experience</div>
+    </div>
+    <div class="stat-card dark">
+      <div class="num">360<sup>°</sup></div>
+      <div class="label">Print · Radio · Cinema · OOH · Festivals</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">3</div>
+      <div class="label">Flagship Event IPs Built &amp; Scaled</div>
+    </div>
+  </aside>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Radio airwaves</span><span class="sep">◆</span>
+    <span>Print headlines</span><span class="sep">◆</span>
+    <span>Cinema screens</span><span class="sep">◆</span>
+    <span>City billboards</span><span class="sep">◆</span>
+    <span>Festival crowds</span><span class="sep">◆</span>
+    <span>Brand moments</span><span class="sep">◆</span>
+    <span>Radio airwaves</span><span class="sep">◆</span>
+    <span>Print headlines</span><span class="sep">◆</span>
+    <span>Cinema screens</span><span class="sep">◆</span>
+    <span>City billboards</span><span class="sep">◆</span>
+    <span>Festival crowds</span><span class="sep">◆</span>
+    <span>Brand moments</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<!-- SECTION 1: MEDIA BUYING -->
+<section class="story" id="media">
+  <div class="section-head">
+    <div class="sec-num">01</div>
+    <h3>Conventional Media Buying</h3>
+    <div class="meta">Chapter One · Reach &amp; Recall</div>
+  </div>
+
+  <div class="intro-block">
+    <p class="pull">In a digital-first world, <span class="highlight">traditional media still delivers</span> unmatched reach, credibility, and recall.</p>
+    <div class="body">
+      <p>At Socks N Shoes Media, we combine deep market understanding with strong media relationships to deliver high-impact offline campaigns that drive real results. Our strength lies not just in buying space, but in buying attention — city by city, slot by slot, with the rate negotiations and added value only decades of relationships can unlock.</p>
+    </div>
+  </div>
+
+  <div class="channels">
+    <!-- Radio -->
+    <article class="channel">
+      <div class="ch-num">CHANNEL 01</div>
+      <h4>Radio Advertising</h4>
+      <p class="sub">High-frequency, high-recall campaigns across leading FM networks.</p>
+      <div class="what-we-do">What we do</div>
+      <ul>
+        <li>Strategic media planning across cities</li>
+        <li>Prime-time spot buying</li>
+        <li>RJ mentions &amp; branded integrations</li>
+        <li>Contests and audience engagement</li>
+      </ul>
+      <div class="impact"><b>The Impact</b>Consistent frequency + strong local connection equals better brand recall.</div>
+    </article>
+
+    <!-- Print -->
+    <article class="channel">
+      <div class="ch-num">CHANNEL 02</div>
+      <h4>Print Advertising</h4>
+      <p class="sub">Newspapers &amp; magazines — where trust is highest.</p>
+      <div class="what-we-do">What we do</div>
+      <ul>
+        <li>Full-page, jacket, and solus ad placements</li>
+        <li>Regional + national publication planning</li>
+        <li>Hyperlocal targeting for city dominance</li>
+        <li>Insertions and special innovations</li>
+      </ul>
+      <div class="impact"><b>The Impact</b>High credibility + mass reach + strong decision-making influence.</div>
+    </article>
+
+    <!-- Cinema -->
+    <article class="channel">
+      <div class="ch-num">CHANNEL 03</div>
+      <h4>Cinema &amp; Theatre</h4>
+      <p class="sub">Turn attention into impact with storytelling on the big screen.</p>
+      <div class="what-we-do">What we do</div>
+      <ul>
+        <li>On-screen ad placements across multiplexes &amp; single screens</li>
+        <li>Strategic movie &amp; location targeting</li>
+        <li>Lobby branding and activation zones</li>
+      </ul>
+      <div class="impact"><b>The Impact</b>Captive audience + immersive environment equals maximum attention.</div>
+    </article>
+
+    <!-- OOH -->
+    <article class="channel">
+      <div class="ch-num">CHANNEL 04</div>
+      <h4>Outdoor &amp; Transit (OOH)</h4>
+      <p class="sub">Own the streets. Dominate visibility.</p>
+      <div class="what-we-do">What we do</div>
+      <ul>
+        <li>Hoardings, billboards, gantries</li>
+        <li>Bus, metro, and airport branding</li>
+        <li>City-wide domination strategies</li>
+      </ul>
+      <div class="impact"><b>The Impact</b>High-frequency visibility with sharp geographic targeting.</div>
+    </article>
+
+    <!-- Other channels wide -->
+    <article class="channel wide">
+      <div class="ch-num" style="color: var(--accent);">CHANNEL 05</div>
+      <h4>Other Conventional Channels</h4>
+      <p class="sub">Extending reach wherever your audience lives, shops, and gathers.</p>
+      <div class="what-we-do">The mix</div>
+      <div class="other-grid">
+        <div>Print inserts &amp; flyer distribution</div>
+        <div>Mall branding &amp; retail media</div>
+        <div>Society activations</div>
+        <div>Experiential outdoor formats</div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Approach strip -->
+  <div class="approach">
+    <h5>Our approach to <em>media buying</em>.</h5>
+    <div class="approach-items">
+      <div>Data-backed media planning</div>
+      <div>Strong rate negotiations &amp; added value</div>
+      <div>City-wise &amp; audience-wise targeting</div>
+      <div>Integration with digital + on-ground</div>
+      <div>Transparent reporting &amp; ROI tracking</div>
+      <div>Measurable impact, not just impressions</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: EVENT IP -->
+<section class="story" id="events">
+  <div class="section-head">
+    <div class="sec-num">02</div>
+    <h3>Event IP Creation</h3>
+    <div class="meta">Chapter Two · Moments at Scale</div>
+  </div>
+
+  <div class="intro-block">
+    <p class="pull">We don’t just promote events — we <span class="highlight">create scalable, ownable IPs</span> that brands can plug into for long-term impact.</p>
+    <div class="body">
+      <p>Our IPs are designed from the ground up: concept to production, talent to ticketing, sponsorship to on-ground execution. The result is a brand-safe, audience-proven property where your message doesn’t just appear — it belongs.</p>
+    </div>
+  </div>
+
+  <div class="build-capabilities">
+    <div class="build-col">
+      <h6>What we build</h6>
+      <ul>
+        <li><span class="num">i.</span> Large-scale festivals</li>
+        <li><span class="num">ii.</span> Ticketed public events</li>
+        <li><span class="num">iii.</span> Brand-owned properties</li>
+        <li><span class="num">iv.</span> Community-driven experiences</li>
+      </ul>
+    </div>
+    <div class="build-col">
+      <h6>Our capabilities</h6>
+      <ul>
+        <li><span class="num">01</span> Concept &amp; IP development</li>
+        <li><span class="num">02</span> End-to-end event production</li>
+        <li><span class="num">03</span> Artist &amp; talent curation</li>
+        <li><span class="num">04</span> Sponsorship strategy &amp; brand integration</li>
+        <li><span class="num">05</span> Ticketing &amp; audience acquisition</li>
+        <li><span class="num">06</span> On-ground + digital amplification</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flagships-label">◆◆◆  Our Flagship IPs  ◆◆◆</div>
+  <div class="flagships">
+    <article class="ip-card">
+      <div class="ornament">R</div>
+      <div class="ip-idx">IP № 01</div>
+      <h4>Rang<br>The Holi<br>Festival</h4>
+      <div>
+        <p class="ip-desc">Colour, music, and crowds — a celebration engineered for mass engagement and high shareability.</p>
+        <div class="ip-meta"><span>Music · Culture</span><span>Annual</span></div>
+      </div>
+    </article>
+    <article class="ip-card">
+      <div class="ornament">L</div>
+      <div class="ip-idx">IP № 02</div>
+      <h4>Lokmat<br>Bachaa<br>Party</h4>
+      <div>
+        <p class="ip-desc">A family-first, community-scale property built around joy, togetherness, and lasting brand recall.</p>
+        <div class="ip-meta"><span>Family · Community</span><span>Multi-city</span></div>
+      </div>
+    </article>
+    <article class="ip-card">
+      <div class="ornament">W</div>
+      <div class="ip-idx">IP № 03</div>
+      <h4>Winter<br>Carnival</h4>
+      <div>
+        <p class="ip-desc">A seasonal, ticketed flagship that turns a calendar moment into a destination for brands and audiences alike.</p>
+        <div class="ip-meta"><span>Seasonal · Lifestyle</span><span>Ticketed</span></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="why-work">
+    <h5>Why event IPs <em style="color:var(--accent);font-style:normal;">work</em>.</h5>
+    <ul>
+      <li>Direct consumer engagement</li>
+      <li>High shareability &amp; social buzz</li>
+      <li>Strong brand recall</li>
+      <li>Monetization through sponsorships &amp; ticketing</li>
+    </ul>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="story" id="why">
+  <div class="section-head">
+    <div class="sec-num">03</div>
+    <h3>Why Socks N Shoes Media</h3>
+    <div class="meta">Chapter Three · The Case</div>
+  </div>
+  <div class="why-grid">
+    <div class="why-cell">
+      <div class="why-idx">i.</div>
+      <p>Dual strength: Media Buying + Event IP Creation under one roof.</p>
+    </div>
+    <div class="why-cell">
+      <div class="why-idx">ii.</div>
+      <p>Strong network across print, radio, cinema &amp; outdoor.</p>
+    </div>
+    <div class="why-cell">
+      <div class="why-idx">iii.</div>
+      <p>Proven expertise in executing large-scale, ticketed events.</p>
+    </div>
+    <div class="why-cell">
+      <div class="why-idx">iv.</div>
+      <p>Ability to convert media visibility into real experiences.</p>
+    </div>
+    <div class="why-cell">
+      <div class="why-idx">v.</div>
+      <p>Focus on measurable impact — not just impressions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-kicker">◆ End of Article · Turn the Page ◆</div>
+  <h3>Let’s plan your<br>next <span class="underline">big campaign</span>.</h3>
+  <p class="cta-line"><span>Media.</span><span class="dot">◆</span><span>Moments.</span><span class="dot">◆</span><span>Impact.</span></p>
+  <div class="cta-buttons">
+    <a href="mailto:hello@socksnshoesmedia.com" class="btn btn-primary">Start a Conversation</a>
+    <a href="#media" class="btn btn-ghost">Explore Services</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="brand-name">Socks &amp; Shoes Media</div>
+      <p>Where mass media meets real experiences. Full-service media buying and experiential agency — building reach, recall, and real-world moments.</p>
+    </div>
+    <div>
+      <h6>Services</h6>
+      <ul>
+        <li><a href="#media">Radio</a></li>
+        <li><a href="#media">Print</a></li>
+        <li><a href="#media">Cinema</a></li>
+        <li><a href="#media">OOH &amp; Transit</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>Event IP</h6>
+      <ul>
+        <li><a href="#events">Rang Holi Festival</a></li>
+        <li><a href="#events">Lokmat Bachaa Party</a></li>
+        <li><a href="#events">Winter Carnival</a></li>
+        <li><a href="#events">Custom IPs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h6>Contact</h6>
+      <ul>
+        <li><a href="mailto:hello@socksnshoesmedia.com">hello@socksnshoesmedia.com</a></li>
+        <li><a href="#cta">Start a campaign</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© Socks N Shoes Media · All Rights Reserved</div>
+    <div>Media · Moments · Impact</div>
+  </div>
+</footer>
+
+<script>
+  // Entrance animation
+  document.querySelectorAll('section.story, .hero, #cta').forEach(el => el.classList.add('fade-up'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
